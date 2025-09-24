@@ -216,12 +216,27 @@ ON c.id = o.customer_id
 */
 
 -- Get all customers along with their orders, including those whithout matching customers
+/*
 SELECT *
 FROM customers AS c
 RIGHT JOIN orders AS o
 ON c.id = o.customer_id
+*/
 
+-- Get all customers and all orders, even if there's no match
+/*
+SELECT *
+FROM customers AS c
+FULL JOIN orders AS o
+ON c.id = o.customer_id
+*/
 
+-- Get all customers who haven't placed any orders
+SELECT *
+FROM customers AS c
+LEFT JOIN orders AS o
+ON c.id = o.customer_id
+WHERE o.customer_id IS NULL
 
 
 
