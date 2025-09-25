@@ -232,11 +232,49 @@ ON c.id = o.customer_id
 */
 
 -- Get all customers who haven't placed any orders
+/*
 SELECT *
 FROM customers AS c
 LEFT JOIN orders AS o
 ON c.id = o.customer_id
 WHERE o.customer_id IS NULL
+*/
+
+-- Get all orders without matching customers
+/*
+SELECT *
+FROM customers AS c
+RIGHT JOIN orders AS o
+ON c.id = o.customer_id
+WHERE c.id IS NULL
+*/
+
+-- Find customers without orders and orders without customers
+/*
+SELECT *
+FROM customers AS c
+FULL JOIN orders AS o
+ON c.id = o.customer_id
+WHERE c.id IS NULL OR o.customer_id IS NULL
+*/
+
+-- Get all customers along with their orders but only for customers who have placed an order (Without using INNER JOIN)
+SELECT *
+FROM customers AS c
+FULL JOIN orders AS o
+ON c.id = o.customer_id
+WHERE c.id IS NOT NULL AND o.customer_id IS NOT NULL
+
+
+
+
+
+
+
+
+
+
+
 
 
 
