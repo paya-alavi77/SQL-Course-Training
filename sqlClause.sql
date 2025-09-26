@@ -1,4 +1,4 @@
-USE MyDatabase;
+--USE MyDatabase;
 -- Retrieve all customer Data
 /*
 SELECT *
@@ -259,11 +259,30 @@ WHERE c.id IS NULL OR o.customer_id IS NULL
 */
 
 -- Get all customers along with their orders but only for customers who have placed an order (Without using INNER JOIN)
+/*
 SELECT *
 FROM customers AS c
 FULL JOIN orders AS o
 ON c.id = o.customer_id
 WHERE c.id IS NOT NULL AND o.customer_id IS NOT NULL
+*/
+
+-- Generate all possible combinations of customers and orders
+/*
+SELECT *
+FROM customers
+CROSS JOIN orders
+*/
+
+-- Using SalesDB, retrieve a list of all orders, along with the related customer, product, and employee details
+-- For each order display: Order ID, Customer's name, Product name, Sales amount, product price, Salesperson's name
+USE SalesDB;
+
+SELECT OrderID, c.FirstName AS CustomerFirstName, c.LastName AS CustomerLastName, p.Product, o.Sales, p.Price, e.FirstName AS EmployeeFirstName, e.LastName AS EmployeeLastName
+FROM Sales.Orders AS o
+LEFT JOIN Sales.Customers AS c ON o.CustomerID = c.CustomerID
+LEFT JOIN Sales.Products AS p ON o.ProductID = p.ProductID
+LEFT JOIN Sales.Employees AS e ON o.SalesPersonID = e.EmployeeID
 
 
 
