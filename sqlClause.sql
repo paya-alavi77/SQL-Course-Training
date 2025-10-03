@@ -276,6 +276,7 @@ CROSS JOIN orders
 
 -- Using SalesDB, retrieve a list of all orders, along with the related customer, product, and employee details
 -- For each order display: Order ID, Customer's name, Product name, Sales amount, product price, Salesperson's name
+/*
 USE SalesDB;
 
 SELECT OrderID, c.FirstName AS CustomerFirstName, c.LastName AS CustomerLastName, p.Product, o.Sales, p.Price, e.FirstName AS EmployeeFirstName, e.LastName AS EmployeeLastName
@@ -283,8 +284,44 @@ FROM Sales.Orders AS o
 LEFT JOIN Sales.Customers AS c ON o.CustomerID = c.CustomerID
 LEFT JOIN Sales.Products AS p ON o.ProductID = p.ProductID
 LEFT JOIN Sales.Employees AS e ON o.SalesPersonID = e.EmployeeID
+*/
 
+-- Combine the data from employees and customers into one table
+/*
+USE SalesDB;
 
+SELECT FirstName, LastName
+FROM Sales.Customers
+
+UNION
+
+SELECT FirstName, LastName
+FROM Sales.Employees  
+*/
+
+-- Combine the data from employees and customers into one table including duplicates
+/*
+USE SalesDB
+SELECT FirstName, LastName
+FROM Sales.Customers
+
+UNION ALL
+
+SELECT FirstName, LastName
+FROM Sales.Employees
+*/
+
+-- Find employees who are  not customers at the same time
+
+USE SalesDB;
+
+SELECT FirstName, LastName
+FROM Sales.Employees
+
+EXCEPT
+
+SELECT FirstName, LastName
+FROM Sales.Customers
 
 
 
